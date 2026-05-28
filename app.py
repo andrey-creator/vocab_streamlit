@@ -37,10 +37,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("<h1 class='main-title'>🇬🇧 ---------</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 15px;'>Platform ------</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 15px;'>------</p>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
-tab_word, tab_sentence = st.tabs(["📚 Words & Vocab", "🗣️ Sentences & Idioms"])
+tab_word, tab_sentence = st.tabs(["Words & Vocab", "Sentences & Idioms"])
 
 with tab_word:
     st.markdown("<br>", unsafe_allow_html=True)
