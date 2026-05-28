@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(
-    page_title="British English Learning Center",
+    page_title="Vocab",
     page_icon="🇬🇧",
     layout="centered"
 )
