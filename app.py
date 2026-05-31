@@ -7,7 +7,7 @@ st.set_page_config(
     layout="centered"
 )
 
-st.markdown("""
+st.markdown("""""
     <style>
     .main-title {
         font-family: 'Inter', sans-serif;
