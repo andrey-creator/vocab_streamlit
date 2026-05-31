@@ -12,8 +12,8 @@ st.markdown("""
     .main-title {
         font-family: 'Inter', sans-serif;
         text-align: center;
-        letter-spacing: -0.5px;
-        margin-bottom: 10px;
+        letter-spacing: 1 px;
+        margin-bottom: 100px;
     }
     
     div[data-testid="stExpander"] {
