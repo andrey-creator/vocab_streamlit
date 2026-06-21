@@ -91,8 +91,8 @@ with tab_sentence:
                 st.markdown("<p class='content-label'>Arti / Terjemahan:</p>", unsafe_allow_html=True)
                 st.success(f"\"{item.get('Arti', '-')}\"")
                 
-                st.markdown("<p class='content-label'>Penjelasan Konteks:</p>", unsafe_allow_html=True)
-                st.markdown(f"<p class='content-text'>{item.get('Penjelasan', '-')}</p>", unsafe_allow_html=True)
+                st.markdown("<p class='content-label'>Contoh Kalimat:</p>", unsafe_allow_html=True)
+                st.markdown(f"<p class='content-text'>{item.get('Contoh', '-')}</p>", unsafe_allow_html=True)
                 
     except FileNotFoundError:
         st.error("File 'daftar_sentence.xlsx' tidak ditemukan. Pastikan file berada di folder yang sama dengan skrip ini.")
