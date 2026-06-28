@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import random
 
 st.set_page_config(
     page_title="Vocab",
@@ -56,10 +57,48 @@ with tab_word:
     
     try:
         df_word = pd.read_excel("daftar_vocab.xlsx")
-        vocab_data = df_word.to_dict(orient="records")
         
+        # --- 1. KONTROL FILTER & SORTING ---
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            # Mengambil semua jenis POS unik secara dinamis dari Excel
+            list_pos = ["Semua"] + sorted(df_word['Pos'].dropna().unique().tolist())
+            pilihan_pos = st.selectbox("Filter berdasarkan POS:", list_pos, key="filter_pos")
+            
+        with col2:
+            pilihan_urut = st.selectbox("Urutkan Berdasarkan:", ["Default (Sesuai Excel)", "A-Z", "Acak (Random)"], key="sort_vocab")
+        
+        # --- 2. PROSES FILTERING ---
+        if pilihan_pos != "Semua":
+            df_proses = df_word[df_word['Pos'] == pilihan_pos].copy()
+        else:
+            df_proses = df_word.copy()
+            
+        # --- 3. PROSES SORTING ---
+        if pilihan_urut == "A-Z":
+            df_proses = df_proses.sort_values(by='Vocab', ascending=True, key=lambda col: col.str.lower())
+            
+        elif pilihan_urut == "Acak (Random)":
+            # State agar urutan acak tidak berubah-ubah saat expander diklik
+            if "vocab_seed" not in st.session_state:
+                st.session_state.vocab_seed = 42
+                
+            df_proses = df_proses.sample(frac=1, random_state=st.session_state.vocab_seed)
+            
+            # Tombol khusus untuk mengocok ulang urutan kata
+            if st.button("🔄 Acak Ulang Kata"):
+                st.session_state.vocab_seed = random.randint(1, 10000)
+                st.rerun()
+
+        # Konversi dataframe hasil filter/sort ke dictionary
+        vocab_data = df_proses.to_dict(orient="records")
+        
+        # --- 4. RENDER EXPANDER ---
+        if not vocab_data:
+            st.warning("Tidak ada kosakata yang cocok dengan filter POS ini.")
+            
         for item in vocab_data:
-            # Menggunakan method .get() untuk menghindari KeyError jika kolom tidak pas
             vocab_name = item.get('Vocab', 'N/A')
             vocab_pos = item.get('Pos', 'N/A')
             judul_expander = f"{vocab_name}  |  {vocab_pos}"
@@ -74,7 +113,7 @@ with tab_word:
     except FileNotFoundError:
         st.error("File 'daftar_vocab.xlsx' tidak ditemukan. Pastikan file berada di folder yang sama dengan skrip ini.")
     except Exception as e:
-        st.error(f"Terjadi kesalahan: {e}")
+        st.error(f"Terjadi kesalahan pada Tab Vocab: {e}")
 
 # ================= TAB SENTENCES =================
 with tab_sentence:
@@ -97,4 +136,4 @@ with tab_sentence:
     except FileNotFoundError:
         st.error("File 'daftar_sentence.xlsx' tidak ditemukan. Pastikan file berada di folder yang sama dengan skrip ini.")
     except Exception as e:
-        st.error(f"Terjadi kesalahan: {e}")
+        st.error(f"Terjadi kesalahan pada Tab Sentence: {e}")
