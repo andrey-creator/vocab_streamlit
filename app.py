@@ -46,7 +46,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Judul Utama
-st.markdown("<h1 class='main-title'>🇬🇧 Vocab & Sentences</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'>Vocab & Sentences</h1>", unsafe_allow_html=True)
 st.markdown("<p class='sub-title'>Andreyson</p>", unsafe_allow_html=True)
 
 tab_word, tab_sentence = st.tabs(["Words & Vocab", "Sentences & Idioms"])
