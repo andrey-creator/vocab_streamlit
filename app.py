@@ -63,14 +63,14 @@ with tab_word:
         
         with col1:
             # Mengambil semua jenis POS unik secara dinamis dari Excel
-            list_pos = ["Semua"] + sorted(df_word['Pos'].dropna().unique().tolist())
-            pilihan_pos = st.selectbox("Filter berdasarkan POS:", list_pos, key="filter_pos")
+            list_pos = ["All"] + sorted(df_word['Pos'].dropna().unique().tolist())
+            pilihan_pos = st.selectbox("Filter according to POS:", list_pos, key="filter_pos")
             
         with col2:
-            pilihan_urut = st.selectbox("Urutkan Berdasarkan:", ["Default (Sesuai Excel)", "A-Z", "Acak (Random)"], key="sort_vocab")
+            pilihan_urut = st.selectbox("Order by:", ["Default", "A-Z", "Random"], key="sort_vocab")
         
         # --- 2. PROSES FILTERING ---
-        if pilihan_pos != "Semua":
+        if pilihan_pos != "All":
             df_proses = df_word[df_word['Pos'] == pilihan_pos].copy()
         else:
             df_proses = df_word.copy()
@@ -79,7 +79,7 @@ with tab_word:
         if pilihan_urut == "A-Z":
             df_proses = df_proses.sort_values(by='Vocab', ascending=True, key=lambda col: col.str.lower())
             
-        elif pilihan_urut == "Acak (Random)":
+        elif pilihan_urut == "Random":
             # State agar urutan acak tidak berubah-ubah saat expander diklik
             if "vocab_seed" not in st.session_state:
                 st.session_state.vocab_seed = 42
@@ -87,7 +87,7 @@ with tab_word:
             df_proses = df_proses.sample(frac=1, random_state=st.session_state.vocab_seed)
             
             # Tombol khusus untuk mengocok ulang urutan kata
-            if st.button("🔄 Acak Ulang Kata"):
+            if st.button("Acak Ulang Kata"):
                 st.session_state.vocab_seed = random.randint(1, 10000)
                 st.rerun()
 
